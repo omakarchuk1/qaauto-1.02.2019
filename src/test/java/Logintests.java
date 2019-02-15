@@ -8,28 +8,42 @@ public class Logintests {
     @Test
     public void negativeLoginTest() {
 
-        String expectedUrl = "https://www.linkedin.com/";
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
-
 
         LandingPage landingPage = new LandingPage(driver);
-        landingPage.login("a@b.c", "");
-        landingPage.isPageLoaded();
-        System.out.println(landingPage.isPageLoaded());
-        Assert.assertTrue(landingPage.isPageLoaded());
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
+        landingPage.login("a@b.c", "");
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
     }
-}
 
-   /* @Test
-        public void successfulLoginTest () {
-        String expectedUrl = "https://www.linkedin.com/";
+
+    @Test
+    public void positiveLoginTest() {
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
 
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
+
+        landingPage.login("sivak1115@outlook.com", "Temp1234%");
+
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isPageLoaded(),
+                "Home page did not load after login.");
+
+        //WebElement profileNavMenuItem = driver.findElement(By.xpath("//Li[@id='profile-nav-item']"));
+        //Assert.assertTrue(profileNavMenuItem.isDisplayed(), "Home page did not load after login");
+
     }
+
+}
+
+
+
+
 
 
         /*
@@ -118,11 +132,10 @@ public class Logintests {
 */
 
 
-
- //String currentUrl = driver.getCurrentUrl();
-    //String expectedUrl = "https://www.linkedin.com/";
-    //   Assert.assertEquals (currentUrl,  expectedUrl, "Login page URL is wrong.");
-                //better Assert.assertEquals (driver.getCurrentUrl(),  expectedUrl, "Login page URL is wrong.");
+//String currentUrl = driver.getCurrentUrl();
+//String expectedUrl = "https://www.linkedin.com/";
+//   Assert.assertEquals (currentUrl,  expectedUrl, "Login page URL is wrong.");
+//better Assert.assertEquals (driver.getCurrentUrl(),  expectedUrl, "Login page URL is wrong.");
 
         /*
         // Check Login page URL
