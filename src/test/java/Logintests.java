@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class Logintests {
 
     @Test
-    public void negativeLoginTest() {
+    public void negativeLoginTestEmptyPasswordField() {
 
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
@@ -34,12 +34,66 @@ public class Logintests {
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page did not load after login.");
 
-        //WebElement profileNavMenuItem = driver.findElement(By.xpath("//Li[@id='profile-nav-item']"));
-        //Assert.assertTrue(profileNavMenuItem.isDisplayed(), "Home page did not load after login");
+           }
+
+    @Test
+    public void negativeLoginTestIncorrectPassword(){
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
+
+        landingPage.login("sivak1115@outlook.com", "Temp");
+
+          LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
+          Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded");
+        Assert.assertTrue(driver.getPageSource().contains("Hmm, that's not the right password. Please try again or"));
 
     }
 
+    @Test
+    public void negativeLoginTestInvalidEmailAddress(){
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
+
+        landingPage.login("sivak1115outlook.com", "Temp");
+
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded");
+        Assert.assertTrue(driver.getPageSource().contains("Please enter a valid email address."));
+
+
+    }
+
+ @Test
+    public void negativeLoginTestUnexistingEmailAddress (){
+
+     WebDriver driver = new ChromeDriver();
+     driver.get("https://www.linkedin.com/");
+
+     LandingPage landingPage = new LandingPage(driver);
+     Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
+
+     landingPage.login("sivak11156436474@outlook.com", "Temp1234%");
+     LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
+     Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded");
+     Assert.assertTrue(driver.getPageSource().contains("Hmm, we don't recognize that email. Please try again."));
+
+ }
+
+
 }
+
+
+
+
+
+
 
 
 
