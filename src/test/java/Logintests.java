@@ -1,15 +1,34 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class Logintests {
 
+    WebDriver driver;
+
+    @BeforeMethod
+    public void beforeMethod() {
+        //WebDriver driver = new ChromeDriver();
+        //this.driver = new ChromeDriver();
+        driver = new ChromeDriver();
+       driver.get("https://www.linkedin.com/");
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+
+        driver.quit();
+    }
+
     @Test
     public void negativeLoginTestEmptyPasswordField() {
 
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
+        //WebDriver driver = new ChromeDriver();
+        //driver.get("https://www.linkedin.com/");
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
@@ -20,15 +39,23 @@ public class Logintests {
     }
 
 
-    @Test
-    public void positiveLoginTest() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
+    @DataProvider
+    public Object[][] validData() {
+        return new Object[][]{
+                { "sivak1115@outlook.com","Temp1234%"},
+                { "siVAK1115@outlook.com","Temp1234%"},
+                { " sivak1115@outlook.com ","Temp1234%"}
+
+        };
+    }
+        @Test(dataProvider = "validData")
+        public void positiveLoginTest(String userEmail, String userPassword) {
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
-        landingPage.login("sivak1115@outlook.com", "Temp1234%");
+        //landingPage.login("sivak1115@outlook.com", "Temp1234%");
+            landingPage.login(userEmail,userPassword);
 
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isPageLoaded(),
@@ -39,8 +66,8 @@ public class Logintests {
     @Test
     public void negativeLoginTestIncorrectPassword() {
 
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
+        //WebDriver driver = new ChromeDriver();
+        //driver.get("https://www.linkedin.com/");
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
@@ -56,8 +83,8 @@ public class Logintests {
 
     @Test
     public void negativeLoginTestInvalidEmailAddress() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
+        //WebDriver driver = new ChromeDriver();
+        //driver.get("https://www.linkedin.com/");
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
@@ -74,8 +101,8 @@ public class Logintests {
     @Test
     public void negativeLoginTestUnexistingEmailAddress() {
 
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
+        //WebDriver driver = new ChromeDriver();
+        //driver.get("https://www.linkedin.com/");
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
