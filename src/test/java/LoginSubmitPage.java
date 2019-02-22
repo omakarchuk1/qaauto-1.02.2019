@@ -10,6 +10,7 @@ public class LoginSubmitPage {
     WebElement loginForm;
     WebElement emailValidationMessage;
 
+
     public LoginSubmitPage(WebDriver driver) {
         this.driver = driver;
         initElements();

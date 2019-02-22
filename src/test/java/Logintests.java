@@ -47,33 +47,7 @@ public class Logintests {
     }
 
 
-    /*
 
-    @Test
-    public void negativeLoginTestEmptyPasswordField() {
-
-        //WebDriver driver = new ChromeDriver();
-        //driver.get("https://www.linkedin.com/");
-
-        LandingPage landingPage = new LandingPage(driver);
-        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
-
-        landingPage.login("a@b.c", "");
-        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
-
-    }
-
-    @Test
-    public void negativeLoginTestEmptyEmailField () {
-
-        LandingPage landingPage = new LandingPage(driver);
-        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
-
-        landingPage.login("", "Temp1234%");
-        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
-
-    }
-*/
 
     @DataProvider
     public Object[][] validData() {
@@ -121,16 +95,16 @@ public class Logintests {
     @DataProvider
     public Object[][] invalidData() {
         return new Object[][]{
-                {"sivak1115@outlook.com", "Temp", "Hmm, that's not the right password. Please try again or request a new one."},
-                {"sivak1115outlook.com", "Temp", "Please enter a valid email address."},
-                {"sivak11156436474@outlook.com", "Temp", "Hmm, we don't recognize that email. Please try again."}
+                {"sivak1115@outlook.com", "Temp", "Hmm, that's not the right password. Please try again or request a new one.", ""},
+                {"sivak1115outlook.com", "Temp","", "Please enter a valid email address."},
+                {"sivak11156436474@outlook.com", "Temp", "","Hmm, we don't recognize that email. Please try again."}
 
         };
     }
 
     @Test(dataProvider = "invalidData")
 
-    public void negativeLoginTest(String userEmail, String userPassword, String passwordValidationMessage ) {
+    public void negativeLoginTest(String userEmail, String userPassword, String passwordValidationMessage, String emailValidationMessage ) {
 
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
@@ -141,11 +115,11 @@ public class Logintests {
         Assert.assertTrue(loginSubmitPage.isPageLoaded(),
                 "LoginSubmitPage page did not load after login.");
 
-        Assert.assertEquals(loginSubmitPage.passwordValidationMessage.getText(), "Hmm, that's not the right password. Please try again or request a new one.", "Wrong validation message for password field");
+        Assert.assertEquals(loginSubmitPage.getPasswordValidationMessageText(),  passwordValidationMessage);
 
-        Assert.assertEquals(loginSubmitPage.emailValidationMessage.getText(), "Please enter a valid email address.", "Wrong validation message for email field");
+        Assert.assertEquals(loginSubmitPage.getEmailValidationMessageText(), emailValidationMessage);
 
-        Assert.assertEquals(loginSubmitPage.emailValidationMessage.getText(), "Hmm, we don't recognize that email. Please try again.", "Wrong validation message for email field");
+        Assert.assertEquals(loginSubmitPage.getEmailValidationMessageText(), emailValidationMessage);
 
 
     }
