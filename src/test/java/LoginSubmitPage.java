@@ -32,6 +32,7 @@ public class LoginSubmitPage {
     }
 
     public String getPasswordValidationMessageText() {
+
         return passwordValidationMessage.getText();
     }
 
