@@ -1,26 +1,23 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
-   private WebDriver driver;
-    private WebElement profileNavMenuItem;
+    private WebDriver driver;
 
+    @FindBy(xpath = "//Li[@id='profile-nav-item']")
+    private WebElement profileNavMenuItem;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        initElements();
-    }
-
-    private void initElements() {
-        profileNavMenuItem = driver.findElement(By.xpath("//Li[@id='profile-nav-item']"));
-
+        PageFactory.initElements(driver, this);
     }
 
     public boolean isPageLoaded() {
         return profileNavMenuItem.isDisplayed()
                 && driver.getCurrentUrl().contains("/feed/")
-                 && driver.getTitle().contains("LinkedIn");
+                && driver.getTitle().contains("LinkedIn");
     }
 
 }

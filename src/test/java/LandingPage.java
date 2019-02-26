@@ -17,18 +17,11 @@ public class LandingPage {
     public LandingPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver,this);
-        //initElements();
-    }
+            }
 
-   /* private void initElements() {
-        signInButton = driver.findElement(By.xpath("//input[@id='login-submit']"));
-        userEmailField = driver.findElement(By.xpath("//input[@id='login-email']"));
-        userPasswordField = driver.findElement(By.xpath("//input[@id='login-password']"));
+     /*
 
-    */
-
-
-    public HomePage loginToHomePage(String userEmail, String userPassword) {
+      public HomePage loginToHomePage(String userEmail, String userPassword) {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
@@ -43,21 +36,76 @@ public class LandingPage {
     }
 
 
-
     public LandingPage loginToLandingPage(String userEmail, String userPassword) {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
         return new LandingPage(driver);
+
+
+
     }
+*/
+
+    public <T extends LoginResult> T login(String userEmail, String userPassword, Class<T> expectedPage){
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+        return PageFactory.initElements(driver, expectedPage);
+    }
+
 
     public boolean isPageLoaded() {
         return signInButton.isDisplayed()
                 && driver.getCurrentUrl().equals("https://www.linkedin.com/")
                 && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
+
+
     }
 
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//initElements();
+
+
+   /* private void initElements() {
+        signInButton = driver.findElement(By.xpath("//input[@id='login-submit']"));
+        userEmailField = driver.findElement(By.xpath("//input[@id='login-email']"));
+        userPasswordField = driver.findElement(By.xpath("//input[@id='login-password']"));
+
+    */
