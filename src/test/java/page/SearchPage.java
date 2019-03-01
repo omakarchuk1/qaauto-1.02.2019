@@ -11,6 +11,10 @@ public class SearchPage {
     @FindBy(xpath = "//h3[contains(@class, 'search-results__total')]")
     private WebElement searchResultsTotal;
 
+    @FindBy(xpath = "//div[@class='search-result__wrapper']")
+    private WebElement searchResultElements;
+
+
     public SearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -22,4 +26,6 @@ public class SearchPage {
                 && driver.getCurrentUrl().contains("/search/results")
                 && driver.getTitle().contains("| Search | LinkedIn");
     }
+//div[@class='search-result__wrapper']/div
+
 }

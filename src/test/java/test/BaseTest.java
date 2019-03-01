@@ -17,6 +17,7 @@ public class BaseTest {
         landingPage = new LandingPage(driver);
     }
 
+
     @AfterMethod
     public void afterMethod() {
         driver.quit();
