@@ -4,8 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import static java.lang.Thread.sleep;
+import util.GMailService;
 
 /**
  * Page Object class for PasswordResetPage page
@@ -13,13 +12,13 @@ import static java.lang.Thread.sleep;
 
 public class  PasswordResetPage {
     private WebDriver driver;
+
     @FindBy (xpath = "//*[@id=\"username\"]")
-    private WebElement userEmailPasswordResetField;
+    private WebElement userEmailField;
 
 
-    @FindBy (xpath ="//*[@id=\"reset-password-submit-button\"]" )
+    @FindBy (xpath ="//button[@id=\"reset-password-submit-button\"]" )
     private WebElement findAccountButton;
-
 
      /**
      * Constructor for PasswordResetPage class
@@ -37,9 +36,9 @@ public class  PasswordResetPage {
      */
         public boolean isPageLoaded () {
 
-        return driver.getCurrentUrl().contains("uas/request-password-reset?")
-         &&
-            driver.getTitle().contains("Reset Password | LinkedIn");
+        return findAccountButton.isDisplayed()
+                && driver.getCurrentUrl().contains("uas/request-password-reset?")
+              && driver.getTitle().contains("Reset Password | LinkedIn");
 
         }
 
@@ -48,14 +47,22 @@ public class  PasswordResetPage {
      * @return
      */
 
-    public void emailAddingOnPasswordResetPage () {
-        userEmailPasswordResetField.sendKeys("om@projectsabrina.com");
+    public void findAccount (String userEmail) {
+        userEmailField.sendKeys(userEmail);
+
+        String messageSubject = "here's the link to reset your password";
+        String messageTo = userEmail;
+        String messageFrom = "security-noreply@linkedin.com";
+
+        GMailService gMailService = new GMailService();
+        gMailService.connect();
+
         findAccountButton.click();
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
+        System.out.println("Content: " + message);
+
+        String resetPasswordUrl = null;
+        driver.get(resetPasswordUrl);
 
     }
 }
