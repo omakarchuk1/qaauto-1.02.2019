@@ -23,6 +23,7 @@ public class SearchPage extends BasePage {
     public SearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementIsClickable(searchResultsTotal);
     }
 
     /**
@@ -30,7 +31,6 @@ public class SearchPage extends BasePage {
      * @return
      */
     public boolean isPageLoaded() {
-
         return searchResultsTotal.isDisplayed()
                 && driver.getCurrentUrl().contains("/search/results")
                 && driver.getTitle().contains("| Search | LinkedIn");
