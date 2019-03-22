@@ -4,11 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.HomePage;
-import page.LandingPage;
 import page.LoginSubmitPage;
 
 public class Logintests extends BaseTest {
 
+    /**
+     * @DataProvider TestNg annotation
+     * @return
+     */
     @DataProvider
     public Object[][] invalidDataLandingPage() {
         return new Object[][]{
@@ -17,6 +20,15 @@ public class Logintests extends BaseTest {
         };
     }
 
+    /**
+     * Test that checks two negative login scenarios with empty userEmail/userPassword on the landing page
+     * Scenario:
+     * - Open landing page and check that it is loaded
+     * - Use empty userEmail/userPassword for login by turn
+     * - Check that the landing page is loaded
+     * @param userEmail
+     * @param userPassword
+     */
     @Test(dataProvider = "invalidDataLandingPage")
         public void negativeLoginTestLandingPage(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
@@ -25,6 +37,10 @@ public class Logintests extends BaseTest {
 
     }
 
+    /**
+     * @DataProvider TestNg annotation
+     * @return
+     */
     @DataProvider
     public Object[][] validData() {
         return new Object[][]{
@@ -35,6 +51,15 @@ public class Logintests extends BaseTest {
         };
     }
 
+    /**
+     * Test checks positive login
+     * Scenario:
+     * - Open landing page and checks that it is loaded
+     * - Login with correct userEmail, userPassword
+     * - Check that HomePage is loaded
+     * @param userEmail
+     * @param userPassword
+     */
     @Test(dataProvider = "validData")
     public void positiveLoginTest(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
@@ -44,7 +69,10 @@ public class Logintests extends BaseTest {
 
     }
 
-
+    /**
+     * @DataProvider TestNg annotation
+     * @return
+     */
     @DataProvider
     public Object[][] invalidData() {
         return new Object[][]{
@@ -55,9 +83,20 @@ public class Logintests extends BaseTest {
         };
     }
 
+    /**
+     * Test checks negative login scenario with invalid data
+     * Scenario:
+     * - open Landing page
+     * - login with invalid userEmail/userPassword
+     * - check that LoginSubmitPage is loaded
+     * - correct error message appearsafter using invalid credentials
+     * @param userEmail
+     * @param userPassword
+     * @param passwordValidationMessage
+     * @param emailValidationMessage
+     */
     @Test(dataProvider = "invalidData")
     public void negativeLoginTest(String userEmail, String userPassword, String passwordValidationMessage, String emailValidationMessage) {
-        LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
         LoginSubmitPage loginSubmitPage = landingPage.login(userEmail, userPassword);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(),

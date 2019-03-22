@@ -8,8 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Page Object class for Landing page.
  */
-public class LandingPage {
-    private WebDriver driver;
+public class LandingPage extends BasePage {
+
     @FindBy (xpath = "//input[@id='login-submit']")
     private WebElement signInButton;
 
@@ -18,6 +18,9 @@ public class LandingPage {
 
     @FindBy (xpath = "//input[@id='login-password']")
     private WebElement userPasswordField;
+
+    @FindBy (xpath = "//*[@class ='link-forgot-password']")
+    private  WebElement forgotPasswordButton;
 
     /**
      * Constructor for LandingPage class.
@@ -28,6 +31,13 @@ public class LandingPage {
         PageFactory.initElements(driver,this);
             }
 
+    /**
+     * Method which helps page object to return more than one type of page object
+     * @param userEmail
+     * @param userPassword
+     * @param <T>
+     * @return
+     */
  public <T> T login (String userEmail, String userPassword){
 
      userEmailField.sendKeys(userEmail);
@@ -53,6 +63,16 @@ public class LandingPage {
 
 
     }
+
+    /**
+     * Method that helps to click on Forget Password button
+     * @return
+     */
+    public RequestPasswordResetPage clickOnForgotPasswordLink () {
+
+       forgotPasswordButton.click();
+       return new RequestPasswordResetPage(driver);
+   }
 
 }
 

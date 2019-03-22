@@ -9,8 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchPage {
-    WebDriver driver;
+/**
+ * Page Object class for SearchPage
+ */
+public class SearchPage extends BasePage {
 
     @FindBy(xpath = "//h3[contains(@class, 'search-results__total')]")
     private WebElement searchResultsTotal;
@@ -23,6 +25,10 @@ public class SearchPage {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Method that checks that the page is loaded
+     * @return
+     */
     public boolean isPageLoaded() {
 
         return searchResultsTotal.isDisplayed()
@@ -30,11 +36,19 @@ public class SearchPage {
                 && driver.getTitle().contains("| Search | LinkedIn");
     }
 
+    /**
+     * Method that checks the search count size
+     * @return
+     */
     public int getSearchResultCount() {
         return searchResultElements.size();
 
     }
 
+    /**
+     * Method that helps to check that each search result contains search term
+     * @return
+     */
     public List<String> getSearchResultsList() {
         List<String> searchResultStringsList = new ArrayList<String>();
         for (WebElement searchResultElement : searchResultElements) {

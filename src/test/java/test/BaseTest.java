@@ -6,10 +6,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import page.LandingPage;
 
+/**
+ * Page Object class for BaseTest
+ */
 public class BaseTest {
-    WebDriver driver;
+    private WebDriver driver;
     LandingPage landingPage;
 
+    /**
+     * Method which is used at the beginning for all tests which extends BaseTest
+     */
     @BeforeMethod
     public void beforeMethod() {
         driver = new ChromeDriver();
@@ -17,7 +23,9 @@ public class BaseTest {
         landingPage = new LandingPage(driver);
     }
 
-
+    /**
+     * Method which is used at the end for all tests which extends BaseTest
+     */
     @AfterMethod
     public void afterMethod() {
         driver.quit();
